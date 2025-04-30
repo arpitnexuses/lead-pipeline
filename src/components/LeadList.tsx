@@ -179,7 +179,7 @@ export const LeadList: React.FC<LeadListProps> = ({ leads, onSelectLead }) => {
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <select
-                    className="w-full appearance-none bg-white border border-gray-200 py-2 pl-4 pr-10 text-base text-gray-600 focus:outline-none focus:border-gray-400"
+                    className="w-full appearance-none bg-white border border-gray-200 py-2 pl-4 pr-10 text-sm text-gray-600 focus:outline-none focus:border-gray-400"
                     value={selectedStage}
                     onChange={(e) => setSelectedStage(e.target.value)}
                   >
@@ -195,7 +195,7 @@ export const LeadList: React.FC<LeadListProps> = ({ leads, onSelectLead }) => {
                 {/* Geo Company Filter */}
                 <div className="relative">
                   <select
-                    className="w-full appearance-none bg-white border border-gray-200 py-2 pl-4 pr-10 text-base text-gray-600 focus:outline-none focus:border-gray-400"
+                    className="w-full appearance-none bg-white border border-gray-200 py-2 pl-4 pr-10 text-sm text-gray-600 focus:outline-none focus:border-gray-400"
                     value={selectedGeoCompany}
                     onChange={(e) => setSelectedGeoCompany(e.target.value)}
                   >
@@ -212,7 +212,7 @@ export const LeadList: React.FC<LeadListProps> = ({ leads, onSelectLead }) => {
                   <input
                     type="text"
                     placeholder="Search leads..."
-                    className="w-full bg-white border border-gray-200 pl-10 pr-4 py-2 text-base text-gray-600 placeholder-gray-400 focus:outline-none focus:border-gray-400"
+                    className="w-full bg-white border border-gray-200 pl-10 pr-4 py-2 text-sm text-gray-600 placeholder-gray-400 focus:outline-none focus:border-gray-400"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
@@ -275,25 +275,25 @@ export const LeadList: React.FC<LeadListProps> = ({ leads, onSelectLead }) => {
                           </div>
                         </div>
                         <div className="ml-2">
-                          <div className="text-base font-medium text-gray-900">{lead.company}</div>
+                          <div className="text-sm font-medium text-gray-900">{lead.company}</div>
                         </div>
                       </div>
                     </td>
                     <td className="px-4 py-2.5 whitespace-nowrap border border-gray-200">
                       <div className="flex items-center">
                         <div className={`h-2 w-2 rounded-full mr-2 ${getLeadStatusDot(lead.stage)}`}></div>
-                        <span className="text-base text-gray-900">{lead.stage}</span>
+                        <span className="text-sm text-gray-900">{lead.stage}</span>
                       </div>
                     </td>
                     <td className="px-4 py-2.5 whitespace-nowrap border border-gray-200">
                       <div className="text-base text-gray-900">
-                        <span className="inline-flex px-3 py-1 text-sm rounded-full bg-white text-gray-900 border border-gray-200">
+                        <span className="inline-flex px-3 py-1 text-xs rounded-full bg-white text-gray-900 border border-gray-200">
                           {lead.lastActivity ? `${lead.lastActivity.type.charAt(0).toUpperCase() + lead.lastActivity.type.slice(1)} - ${lead.lastActivity.description} (${lead.lastActivity.date})` : 'No activity'}
                         </span>
                       </div>
                     </td>
                     <td className="px-4 py-2.5 whitespace-nowrap border border-gray-200">
-                      <div className="text-base text-gray-900">
+                      <div className="text-sm text-gray-900">
                         {`RSM ${lead.geoCompany.replace('RSM ', '')}`}
                       </div>
                     </td>
@@ -307,7 +307,7 @@ export const LeadList: React.FC<LeadListProps> = ({ leads, onSelectLead }) => {
                           </div>
                         </div>
                         <div className="ml-3">
-                          <div className="text-base font-medium text-gray-900">{lead.name}</div>
+                          <div className="text-sm font-medium text-gray-900">{lead.name}</div>
                         </div>
                       </div>
                     </td>
@@ -321,7 +321,7 @@ export const LeadList: React.FC<LeadListProps> = ({ leads, onSelectLead }) => {
                           </div>
                         </div>
                         <div className="ml-2">
-                          <div className="text-base font-medium text-gray-900">
+                          <div className="text-sm font-medium text-gray-900">
                             {lead.associatedContact || 'Not assigned'}
                           </div>
                         </div>
