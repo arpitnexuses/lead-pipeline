@@ -1,15 +1,29 @@
 export interface Lead {
   id: string;
+  leadDate: string;
   name: string;
+  fullName: string;
+  month: string;
+  status: string;
+  dueDate: string;
+  clientFollowup: string;
+  pitch: string;
+  meetingDate: string;
+  position: string;
   email: string;
+  linkedinUrl: string;
   phone: string;
   mobilePhone?: string;
   company: string;
-  position: string;
+  website: string;
+  companyLinkedin: string;
+  companyDetails: string;
+  companySize: string;
+  industry: string;
+  headquarter: string;
+  geoCompany: string;
   address: string;
   stage: string;
-  status: string;
-  value: number;
   probability?: number;
   lastActivity: {
     type: string;

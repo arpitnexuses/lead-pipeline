@@ -1,15 +1,33 @@
-import React from 'react';
-import { ArrowLeft, MapPin, Calendar, ChevronRight, FileText, Phone, Mail, MessageSquare } from 'lucide-react';
-import { Lead } from '../types';
-import { ContactInfo } from './ContactInfo';
+import React, { useState } from 'react';
+import { ArrowLeft, MapPin, Calendar, ChevronRight, FileText, Phone, Mail, MessageSquare, Globe, Briefcase, Building2, Users, Info, Plus } from 'lucide-react';
+import { Lead, LeadActivity } from '../types';
 import { ActivityTimeline } from './ActivityTimeline';
 
 interface LeadDetailProps {
   lead: Lead;
   onBack: () => void;
+  onUpdateLead?: (updatedLead: Lead) => void;
 }
 
-export const LeadDetail: React.FC<LeadDetailProps> = ({ lead, onBack }) => {
+export const LeadDetail: React.FC<LeadDetailProps> = ({ lead, onBack, onUpdateLead }) => {
+  const [noteText, setNoteText] = useState('');
+  const [currentLead, setCurrentLead] = useState<Lead>(lead);
+
+  const handleAddActivity = (activity: Omit<LeadActivity, 'id'>) => {
+    const newActivity = {
+      ...activity,
+      id: Date.now().toString(), // Simple way to generate unique ID
+    };
+    
+    const updatedLead = {
+      ...currentLead,
+      activities: [newActivity, ...currentLead.activities]
+    };
+    
+    setCurrentLead(updatedLead);
+    onUpdateLead?.(updatedLead);
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -29,9 +47,11 @@ export const LeadDetail: React.FC<LeadDetailProps> = ({ lead, onBack }) => {
           </button>
         </div>
       </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-1 space-y-6">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Left Side - Lead Details */}
+        <div className="space-y-6">
+          {/* Lead Overview Card */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
             <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-8">
               <div className="flex items-center">
@@ -39,146 +59,223 @@ export const LeadDetail: React.FC<LeadDetailProps> = ({ lead, onBack }) => {
                   {lead.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div className="ml-4">
-                  <h2 className="text-xl font-semibold text-white">{lead.name}</h2>
-                  <p className="text-blue-100">{lead.position} at {lead.company}</p>
+                  <h2 className="text-xl font-semibold text-white">{lead.fullName}</h2>
+                  <p className="text-blue-100">{lead.position}</p>
                 </div>
               </div>
-              <div className="mt-6 grid grid-cols-2 gap-4">
-                <button className="flex items-center justify-center px-4 py-2 bg-white/10 rounded-lg text-white hover:bg-white/20 transition-colors">
-                  <Phone size={16} className="mr-2" />
-                  Call
-                </button>
-                <button className="flex items-center justify-center px-4 py-2 bg-white/10 rounded-lg text-white hover:bg-white/20 transition-colors">
-                  <Mail size={16} className="mr-2" />
-                  Email
-                </button>
-              </div>
             </div>
-            
-            <ContactInfo lead={lead} />
-            
-            <div className="px-6 py-4 border-t border-gray-100">
-              <h3 className="text-sm font-medium text-gray-900 mb-3">Location</h3>
-              <div className="relative h-48 w-full rounded-lg overflow-hidden border border-gray-200">
-                <div className="absolute inset-0 bg-gray-50 flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPin className="h-8 w-8 text-gray-400 mx-auto" />
-                    <p className="mt-1 text-sm text-gray-500">{lead.address}</p>
+
+            <div className="p-6">
+              {/* Basic Information in 2 columns */}
+              <div className="mb-6">
+                <h3 className="text-sm font-medium text-gray-900 mb-4">Basic Information</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div className="flex items-start">
+                      <Calendar className="w-5 h-5 text-gray-400 mt-1" />
+                      <div className="ml-3">
+                        <p className="text-sm font-medium text-gray-500">Lead Date</p>
+                        <p className="text-base text-gray-900">{lead.leadDate}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start">
+                      <Calendar className="w-5 h-5 text-gray-400 mt-1" />
+                      <div className="ml-3">
+                        <p className="text-sm font-medium text-gray-500">Month</p>
+                        <p className="text-base text-gray-900">{lead.month}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start">
+                      <Info className="w-5 h-5 text-gray-400 mt-1" />
+                      <div className="ml-3">
+                        <p className="text-sm font-medium text-gray-500">Status</p>
+                        <span className="px-3 py-1.5 text-xs font-medium rounded-lg bg-blue-50 text-blue-600">
+                          {lead.status}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex items-start">
+                      <Calendar className="w-5 h-5 text-gray-400 mt-1" />
+                      <div className="ml-3">
+                        <p className="text-sm font-medium text-gray-500">Due Date</p>
+                        <p className="text-base text-gray-900">{lead.dueDate}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start">
+                      <Calendar className="w-5 h-5 text-gray-400 mt-1" />
+                      <div className="ml-3">
+                        <p className="text-sm font-medium text-gray-500">Meeting Date</p>
+                        <p className="text-base text-gray-900">{lead.meetingDate}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact Information in 2 columns */}
+              <div>
+                <h3 className="text-sm font-medium text-gray-900 mb-4">Contact Information</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div className="flex items-start">
+                      <Mail className="w-5 h-5 text-gray-400 mt-1" />
+                      <div className="ml-3">
+                        <p className="text-sm font-medium text-gray-500">Email</p>
+                        <a href={`mailto:${lead.email}`} className="text-base text-blue-600 hover:text-blue-700">{lead.email}</a>
+                      </div>
+                    </div>
+                    <div className="flex items-start">
+                      <Globe className="w-5 h-5 text-gray-400 mt-1" />
+                      <div className="ml-3">
+                        <p className="text-sm font-medium text-gray-500">LinkedIn</p>
+                        <a href={lead.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-base text-blue-600 hover:text-blue-700">View Profile</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex items-start">
+                      <Phone className="w-5 h-5 text-gray-400 mt-1" />
+                      <div className="ml-3">
+                        <p className="text-sm font-medium text-gray-500">Contact Number</p>
+                        <p className="text-base text-gray-900">{lead.phone}</p>
+                        {lead.mobilePhone && (
+                          <p className="text-base text-gray-900">{lead.mobilePhone} (Mobile)</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          
+
+          {/* Company Information */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-            <div className="px-6 py-4 border-b border-gray-100">
-              <h3 className="text-lg font-medium text-gray-900">Deal Information</h3>
-            </div>
             <div className="p-6">
-              <div className="grid grid-cols-2 gap-6">
+              <h3 className="text-lg font-medium text-gray-900 mb-6">Company Information</h3>
+              <div className="space-y-6">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Deal Value</p>
-                  <p className="mt-1 text-2xl font-semibold text-gray-900">${lead.value.toLocaleString()}</p>
+                  <h4 className="text-sm font-medium text-gray-500 mb-4">Basic Details</h4>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">Company Name</p>
+                        <p className="text-base font-medium text-gray-900">{lead.company}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">Website</p>
+                        <a href={lead.website} target="_blank" rel="noopener noreferrer" className="text-base text-blue-600 hover:text-blue-700">{lead.website}</a>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">Company LinkedIn</p>
+                        <a href={lead.companyLinkedin} target="_blank" rel="noopener noreferrer" className="text-base text-blue-600 hover:text-blue-700">View Company Profile</a>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">Company Size</p>
+                        <p className="text-base text-gray-900">{lead.companySize}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">Industry</p>
+                        <p className="text-base text-gray-900">{lead.industry}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">Headquarters</p>
+                        <p className="text-base text-gray-900">{lead.headquarter}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">Geo Company</p>
+                        <p className="text-base text-gray-900">{lead.geoCompany}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">Address</p>
+                        <p className="text-base text-gray-900">{lead.address}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Probability</p>
-                  <p className="mt-1 text-2xl font-semibold text-gray-900">{lead.probability || 0}%</p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">Stage</p>
-                  <p className="mt-1">
-                    <span className="px-3 py-1.5 text-sm font-medium rounded-lg bg-blue-50 text-blue-600">
-                      {lead.stage}
-                    </span>
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">Status</p>
-                  <p className="mt-1">
-                    <span className={`px-3 py-1.5 text-sm font-medium rounded-lg ${getStatusColor(lead.status)}`}>
-                      {lead.status}
-                    </span>
-                  </p>
+                  <h4 className="text-sm font-medium text-gray-500 mb-4">Company Details</h4>
+                  <p className="text-base text-gray-900 whitespace-pre-wrap">{lead.companyDetails}</p>
                 </div>
               </div>
-              
-              <div className="mt-6">
-                <div className="h-2 bg-gray-100 rounded-full">
-                  <div 
-                    className="h-2 bg-blue-500 rounded-full" 
-                    style={{ width: `${lead.probability || 0}%` }}
-                  ></div>
+            </div>
+          </div>
+
+          {/* Lead Details */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+            <div className="p-6">
+              <h3 className="text-lg font-medium text-gray-900 mb-6">Lead Details</h3>
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <p className="text-sm font-medium text-gray-500">Client Followup</p>
+                  <p className="mt-1 text-base text-gray-900">{lead.clientFollowup}</p>
                 </div>
-                <div className="mt-2 flex justify-between text-sm text-gray-500">
-                  <span>Progress</span>
-                  <span>{lead.probability || 0}% Complete</span>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">Pitch</p>
+                  <p className="mt-1 text-base text-gray-900 whitespace-pre-wrap">{lead.pitch}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        
-        <div className="md:col-span-2 space-y-6">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-            <div className="px-6 py-4 border-b border-gray-100">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium text-gray-900">Activity Timeline</h3>
-                <button className="text-sm text-blue-600 hover:text-blue-700 transition-colors">
-                  View All
-                </button>
-              </div>
-            </div>
-            <ActivityTimeline activities={lead.activities} />
-          </div>
-          
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-            <div className="px-6 py-4 border-b border-gray-100">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium text-gray-900">Notes</h3>
-                <button className="text-sm text-blue-600 hover:text-blue-700 transition-colors">
-                  View All Notes
-                </button>
-              </div>
-            </div>
+
+        {/* Right Side - Activity Timeline and Notes */}
+        <div className="space-y-6">
+          {/* Combined Activity Timeline and Notes */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 sticky top-6">
             <div className="p-6">
-              <div className="mb-6">
-                <textarea 
-                  className="w-full border border-gray-200 rounded-lg p-3 text-sm text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  rows={4}
-                  placeholder="Add a note about this lead..."
-                ></textarea>
-                <div className="mt-3 flex justify-end">
-                  <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
-                    Add Note
+              <div className="text-base mb-8">
+                <ActivityTimeline 
+                  activities={currentLead.activities} 
+                  onAddActivity={handleAddActivity}
+                />
+              </div>
+
+              {/* Notes Section */}
+              <div className="border-t border-gray-100 pt-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-lg font-medium text-gray-900">Notes</h3>
+                  <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                    View All Notes
                   </button>
                 </div>
-              </div>
-              
-              {lead.notes && lead.notes.length > 0 ? (
+                
+                {/* Add Note Input */}
+                <div className="mb-6">
+                  <textarea
+                    value={noteText}
+                    onChange={(e) => setNoteText(e.target.value)}
+                    placeholder="Add a note about this lead..."
+                    className="w-full h-24 px-4 py-3 text-base text-gray-900 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  />
+                  <div className="mt-2 flex justify-end">
+                    <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center">
+                      <Plus size={16} className="mr-2" />
+                      Add Note
+                    </button>
+                  </div>
+                </div>
+
+                {/* Notes List */}
                 <div className="space-y-4">
-                  {lead.notes.map((note, index) => (
-                    <div key={index} className="flex space-x-4 p-4 bg-gray-50 rounded-lg">
-                      <div className="flex-shrink-0">
-                        <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-xs font-medium">
-                          JD
-                        </div>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between">
-                          <p className="text-sm font-medium text-gray-900">John Doe</p>
-                          <span className="text-xs text-gray-500">2 days ago</span>
-                        </div>
-                        <p className="mt-1 text-sm text-gray-600">{note}</p>
-                      </div>
+                  {lead.notes?.map((note, index) => (
+                    <div key={index} className="bg-gray-50 rounded-lg p-4">
+                      <p className="text-base text-gray-900">{note}</p>
                     </div>
                   ))}
+                  {(!lead.notes || lead.notes.length === 0) && (
+                    <div className="text-center py-8">
+                      <MessageSquare className="h-12 w-12 text-gray-300 mx-auto mb-3" />
+                      <p className="text-gray-500">No notes yet</p>
+                    </div>
+                  )}
                 </div>
-              ) : (
-                <div className="text-center py-6">
-                  <MessageSquare className="h-8 w-8 text-gray-400 mx-auto" />
-                  <p className="mt-2 text-sm text-gray-500">No notes yet</p>
-                </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
@@ -186,16 +283,3 @@ export const LeadDetail: React.FC<LeadDetailProps> = ({ lead, onBack }) => {
     </div>
   );
 };
-
-function getStatusColor(status: string) {
-  switch (status.toLowerCase()) {
-    case 'active':
-      return 'bg-green-50 text-green-600';
-    case 'open':
-      return 'bg-blue-50 text-blue-600';
-    case 'draft':
-      return 'bg-gray-50 text-gray-600';
-    default:
-      return 'bg-gray-50 text-gray-600';
-  }
-}

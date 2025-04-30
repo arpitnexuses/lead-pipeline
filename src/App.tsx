@@ -18,20 +18,22 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-white border-b border-gray-200 pt-4">
         <div className="max-w-[95%] mx-auto">
           <div className="flex justify-between items-center px-4 sm:px-6 lg:px-8 h-16">
             <div className="flex items-center space-x-8">
-              <h1 className="text-2xl font-semibold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
-                Lead Pipeline
-              </h1>
+              <img 
+                src="https://cdn-nexlink.s3.us-east-2.amazonaws.com/Nexuses_logo_blue_(2)_3_721ee160-2cac-429c-af66-f55b7233f6ed.png" 
+                alt="Nexuses Logo" 
+                className="h-10"
+              />
               <nav className="hidden md:flex space-x-4">
                 <a href="#" className="px-3 py-2 text-base font-medium text-gray-900">Dashboard</a>
                 <a href="#" className="px-3 py-2 text-base font-medium text-gray-500 hover:text-gray-900">Reports</a>
                 <a href="#" className="px-3 py-2 text-base font-medium text-gray-500 hover:text-gray-900">Analytics</a>
               </nav>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-6">
               <button className="flex items-center px-4 py-2 text-base font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-sm hover:shadow">
                 <Plus size={18} className="mr-2" />
                 New Lead

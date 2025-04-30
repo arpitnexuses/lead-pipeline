@@ -1,14 +1,32 @@
-import React from 'react';
-import { Activity, Calendar, Mail, Phone, FileText, ChevronRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { Activity, Calendar, Mail, Phone, FileText, ChevronRight, Plus } from 'lucide-react';
 import { LeadActivity } from '../types';
+import { AddActivityModal } from './AddActivityModal';
 
 interface ActivityTimelineProps {
   activities: LeadActivity[];
+  onAddActivity: (activity: Omit<LeadActivity, 'id'>) => void;
 }
 
-export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ activities }) => {
+export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ activities, onAddActivity }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleAddActivity = (activity: Omit<LeadActivity, 'id'>) => {
+    onAddActivity(activity);
+  };
+
   return (
     <div className="px-4 py-4 sm:px-6">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-lg font-semibold text-gray-900">Activity Timeline</h2>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          <Plus size={16} className="mr-2" />
+          Add Activity
+        </button>
+      </div>
       <ul className="space-y-6">
         {activities.map((activity, index) => (
           <li key={index} className="relative flex gap-x-4">
@@ -18,47 +36,47 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ activities }
             <div className={`relative flex h-6 w-6 flex-none items-center justify-center rounded-full ${getTypeColor(activity.type)}`}>
               {getTypeIcon(activity.type)}
             </div>
-            <div className="flex-auto rounded-md border border-gray-200 p-3">
+            <div className="flex-auto rounded-md border border-gray-200 p-4">
               <div className="flex justify-between gap-x-4">
                 <div className="flex-1">
-                  <p className="font-medium text-gray-900">{activity.title}</p>
+                  <p className="text-lg font-medium text-gray-900">{activity.title}</p>
                 </div>
-                <p className="flex-none text-xs text-gray-500">
+                <p className="flex-none text-sm text-gray-500">
                   <time dateTime={activity.date}>{activity.date}</time>
                 </p>
               </div>
-              <p className="mt-1 text-sm text-gray-500">{activity.description}</p>
+              <p className="mt-2 text-base text-gray-600">{activity.description}</p>
               {activity.dateTime && (
-                <div className="mt-2 flex items-center text-xs text-gray-500">
-                  <Calendar size={12} className="mr-1" />
+                <div className="mt-2 flex items-center text-sm text-gray-500">
+                  <Calendar size={14} className="mr-1" />
                   <span>{activity.dateTime}</span>
                 </div>
               )}
-              <div className="mt-2 flex items-center justify-between">
+              <div className="mt-3 flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <div className="h-5 w-5 rounded-full bg-gray-200 flex items-center justify-center">
-                      <span className="text-[10px] font-medium text-gray-600">JD</span>
+                    <div className="h-6 w-6 rounded-full bg-gray-200 flex items-center justify-center">
+                      <span className="text-xs font-medium text-gray-600">JD</span>
                     </div>
                   </div>
-                  <p className="ml-1 text-xs text-gray-500">{activity.user || 'John Doe'}</p>
+                  <p className="ml-2 text-sm text-gray-600">{activity.user || 'John Doe'}</p>
                 </div>
-                <div className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusBadgeColor(activity.status)}`}>
+                <div className={`px-3 py-1.5 text-sm font-medium rounded-full ${getStatusBadgeColor(activity.status)}`}>
                   {activity.status}
                 </div>
               </div>
               {activity.documents && (
-                <div className="mt-2 border-t border-gray-100 pt-2">
+                <div className="mt-3 border-t border-gray-100 pt-3">
                   <div className="flex items-center justify-between">
-                    <p className="text-xs font-medium text-gray-500">Documents</p>
-                    <button className="text-xs text-blue-600 hover:text-blue-800 flex items-center">
-                      View all <ChevronRight size={12} />
+                    <p className="text-sm font-medium text-gray-600">Documents</p>
+                    <button className="text-sm text-blue-600 hover:text-blue-800 flex items-center">
+                      View all <ChevronRight size={14} />
                     </button>
                   </div>
-                  <div className="mt-1 flex flex-wrap gap-2">
+                  <div className="mt-2 flex flex-wrap gap-2">
                     {activity.documents.map((doc, docIndex) => (
-                      <div key={docIndex} className="inline-flex items-center px-2 py-1 bg-gray-100 rounded text-xs text-gray-700">
-                        <FileText size={12} className="mr-1" />
+                      <div key={docIndex} className="inline-flex items-center px-3 py-1.5 bg-gray-100 rounded-lg text-sm text-gray-700">
+                        <FileText size={14} className="mr-1.5" />
                         {doc}
                       </div>
                     ))}
@@ -69,6 +87,11 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ activities }
           </li>
         ))}
       </ul>
+      <AddActivityModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleAddActivity}
+      />
     </div>
   );
 };
@@ -76,13 +99,13 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ activities }
 function getTypeIcon(type: string) {
   switch (type.toLowerCase()) {
     case 'email':
-      return <Mail size={12} className="text-white" />;
+      return <Mail size={14} className="text-white" />;
     case 'call':
-      return <Phone size={12} className="text-white" />;
+      return <Phone size={14} className="text-white" />;
     case 'meeting':
-      return <Calendar size={12} className="text-white" />;
+      return <Calendar size={14} className="text-white" />;
     default:
-      return <Activity size={12} className="text-white" />;
+      return <Activity size={14} className="text-white" />;
   }
 }
 
