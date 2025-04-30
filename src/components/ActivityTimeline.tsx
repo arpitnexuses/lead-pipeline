@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Activity, Calendar, Mail, Phone, FileText, ChevronRight, Plus } from 'lucide-react';
+import { Activity, Calendar, Mail, Phone, FileText, ChevronRight, Plus, MessageSquare } from 'lucide-react';
 import { LeadActivity } from '../types';
 import { AddActivityModal } from './AddActivityModal';
 
@@ -8,85 +8,134 @@ interface ActivityTimelineProps {
   onAddActivity: (activity: Omit<LeadActivity, 'id'>) => void;
 }
 
+const getTypeIcon = (type: string) => {
+  switch (type.toLowerCase()) {
+    case 'email':
+      return <Mail className="h-4 w-4 text-white" />;
+    case 'call':
+      return <Phone className="h-4 w-4 text-white" />;
+    case 'meeting':
+      return <Calendar className="h-4 w-4 text-white" />;
+    case 'note':
+      return <MessageSquare className="h-4 w-4 text-white" />;
+    default:
+      return <Activity className="h-4 w-4 text-white" />;
+  }
+};
+
+const getTypeColor = (type: string) => {
+  switch (type.toLowerCase()) {
+    case 'email':
+      return 'bg-blue-600';
+    case 'call':
+      return 'bg-green-600';
+    case 'meeting':
+      return 'bg-purple-600';
+    case 'note':
+      return 'bg-orange-600';
+    default:
+      return 'bg-gray-600';
+  }
+};
+
+const getStatusBadgeColor = (status: string) => {
+  switch (status.toLowerCase()) {
+    case 'active':
+      return 'bg-green-50 text-green-700';
+    case 'completed':
+      return 'bg-blue-50 text-blue-700';
+    case 'draft':
+      return 'bg-gray-50 text-gray-700';
+    case 'open':
+      return 'bg-yellow-50 text-yellow-700';
+    default:
+      return 'bg-gray-50 text-gray-700';
+  }
+};
+
 export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ activities, onAddActivity }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAddActivity = (activity: Omit<LeadActivity, 'id'>) => {
     onAddActivity(activity);
+    setIsModalOpen(false);
   };
 
   return (
-    <div className="px-4 py-4 sm:px-6">
+    <div className="bg-white">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-lg font-semibold text-gray-900">Activity Timeline</h2>
+        <div>
+          <h2 className="text-xl font-semibold text-gray-900">Activity</h2>
+          <p className="text-sm text-gray-500 mt-1">Track all lead-related activities</p>
+        </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
           <Plus size={16} className="mr-2" />
           Add Activity
         </button>
       </div>
-      <ul className="space-y-6">
-        {activities.map((activity, index) => (
-          <li key={index} className="relative flex gap-x-4">
-            {index < activities.length - 1 && (
-              <div className="absolute left-3 top-6 -bottom-6 w-px bg-gray-200" aria-hidden="true" />
-            )}
-            <div className={`relative flex h-6 w-6 flex-none items-center justify-center rounded-full ${getTypeColor(activity.type)}`}>
-              {getTypeIcon(activity.type)}
-            </div>
-            <div className="flex-auto rounded-md border border-gray-200 p-4">
-              <div className="flex justify-between gap-x-4">
-                <div className="flex-1">
-                  <p className="text-lg font-medium text-gray-900">{activity.title}</p>
-                </div>
-                <p className="flex-none text-sm text-gray-500">
-                  <time dateTime={activity.date}>{activity.date}</time>
-                </p>
-              </div>
-              <p className="mt-2 text-base text-gray-600">{activity.description}</p>
-              {activity.dateTime && (
-                <div className="mt-2 flex items-center text-sm text-gray-500">
-                  <Calendar size={14} className="mr-1" />
-                  <span>{activity.dateTime}</span>
-                </div>
-              )}
-              <div className="mt-3 flex items-center justify-between">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="h-6 w-6 rounded-full bg-gray-200 flex items-center justify-center">
-                      <span className="text-xs font-medium text-gray-600">JD</span>
+
+      <div className="flow-root">
+        <ul role="list" className="-mb-8">
+          {activities.map((activity, idx) => (
+            <li key={idx}>
+              <div className="relative pb-8">
+                {idx !== activities.length - 1 && (
+                  <span className="absolute left-3 top-5 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true" />
+                )}
+                <div className="relative flex items-start space-x-3">
+                  <div className={`relative ${getTypeColor(activity.type)} rounded-full h-6 w-6 flex items-center justify-center ring-8 ring-white`}>
+                    {getTypeIcon(activity.type)}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm">
+                      <div className="font-medium text-gray-900 mb-0.5">{activity.title}</div>
+                      <p className="text-gray-500 text-sm">{activity.description}</p>
                     </div>
+                    <div className="mt-2 flex items-center space-x-4">
+                      <div className="flex items-center text-sm text-gray-500">
+                        <Calendar className="mr-1.5 h-4 w-4 flex-shrink-0 text-gray-400" />
+                        {activity.dateTime || activity.date}
+                      </div>
+                      {activity.user && (
+                        <div className="flex items-center">
+                          <div className="flex-shrink-0">
+                            <div className="h-6 w-6 rounded-full bg-gray-100 flex items-center justify-center">
+                              <span className="text-xs font-medium text-gray-600">
+                                {activity.user.split(' ').map(n => n[0]).join('')}
+                              </span>
+                            </div>
+                          </div>
+                          <span className="ml-2 text-sm text-gray-500">{activity.user}</span>
+                        </div>
+                      )}
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusBadgeColor(activity.status)}`}>
+                        {activity.status}
+                      </span>
+                    </div>
+                    {activity.documents && activity.documents.length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {activity.documents.map((doc, docIdx) => (
+                          <div
+                            key={docIdx}
+                            className="inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-medium bg-gray-50 text-gray-800 hover:bg-gray-100 cursor-pointer"
+                          >
+                            <FileText size={12} className="mr-1.5" />
+                            {doc}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                  <p className="ml-2 text-sm text-gray-600">{activity.user || 'John Doe'}</p>
-                </div>
-                <div className={`px-3 py-1.5 text-sm font-medium rounded-full ${getStatusBadgeColor(activity.status)}`}>
-                  {activity.status}
                 </div>
               </div>
-              {activity.documents && (
-                <div className="mt-3 border-t border-gray-100 pt-3">
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium text-gray-600">Documents</p>
-                    <button className="text-sm text-blue-600 hover:text-blue-800 flex items-center">
-                      View all <ChevronRight size={14} />
-                    </button>
-                  </div>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {activity.documents.map((doc, docIndex) => (
-                      <div key={docIndex} className="inline-flex items-center px-3 py-1.5 bg-gray-100 rounded-lg text-sm text-gray-700">
-                        <FileText size={14} className="mr-1.5" />
-                        {doc}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      </div>
+
       <AddActivityModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -95,44 +144,3 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ activities, 
     </div>
   );
 };
-
-function getTypeIcon(type: string) {
-  switch (type.toLowerCase()) {
-    case 'email':
-      return <Mail size={14} className="text-white" />;
-    case 'call':
-      return <Phone size={14} className="text-white" />;
-    case 'meeting':
-      return <Calendar size={14} className="text-white" />;
-    default:
-      return <Activity size={14} className="text-white" />;
-  }
-}
-
-function getTypeColor(type: string) {
-  switch (type.toLowerCase()) {
-    case 'email':
-      return 'bg-blue-500';
-    case 'call':
-      return 'bg-green-500';
-    case 'meeting':
-      return 'bg-purple-500';
-    default:
-      return 'bg-gray-500';
-  }
-}
-
-function getStatusBadgeColor(status: string) {
-  if (!status) return '';
-  
-  switch (status.toLowerCase()) {
-    case 'active':
-      return 'bg-green-100 text-green-800';
-    case 'open':
-      return 'bg-blue-100 text-blue-800';
-    case 'draft':
-      return 'bg-gray-100 text-gray-800';
-    default:
-      return 'bg-gray-100 text-gray-800';
-  }
-}

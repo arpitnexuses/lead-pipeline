@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LeadList } from './components/LeadList';
 import { LeadDetail } from './components/LeadDetail';
 import { mockLeads } from './data/mockData';
@@ -7,7 +7,18 @@ import { Plus, Bell, Settings, Search } from 'lucide-react';
 
 function App() {
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const handleLeadSelect = (lead: Lead) => {
     setSelectedLead(lead);
   };
@@ -18,7 +29,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200 pt-4">
+      <header className="bg-white border-b border-gray-200 py-1">
         <div className="max-w-[95%] mx-auto">
           <div className="flex justify-between items-center px-4 sm:px-6 lg:px-8 h-16">
             <div className="flex items-center space-x-8">
@@ -34,7 +45,7 @@ function App() {
               </nav>
             </div>
             <div className="flex items-center space-x-6">
-              <button className="flex items-center px-4 py-2 text-base font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-sm hover:shadow">
+              <button className="flex items-center px-4 py-2 text-base font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:scale-105 hover:shadow-lg shadow-sm">
                 <Plus size={18} className="mr-2" />
                 New Lead
               </button>

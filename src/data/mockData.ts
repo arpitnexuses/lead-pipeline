@@ -14,6 +14,9 @@ export const mockLeads: Lead[] = [
     geoCompany: 'RSM Saudi',
     position: 'Chief Technology Officer',
     address: 'Riyadh, Saudi Arabia',
+    country: 'Saudi Arabia',
+    nextTask: 'Review proposal',
+    associatedContact: 'Sanjeev Reddy',
     stage: 'PROPOSAL / NDA',
     status: 'Active',
     dueDate: '2024-03-30',
@@ -35,31 +38,33 @@ export const mockLeads: Lead[] = [
     },
     activities: [
       {
-        type: 'call',
-        title: 'Client check-in',
-        description: 'Final agreement is in review and looking good to be signed on Monday',
-        date: 'Today',
+        type: 'email',
+        title: 'Proposal Sent',
+        description: 'Sent detailed proposal and NDA documents',
+        date: '3 days ago',
         dateTime: '10:00 AM GMT',
-        status: 'Open',
-        user: 'John Smith'
+        status: 'Completed',
+        user: 'John Smith',
+        documents: ['Proposal.pdf', 'NDA.pdf']
+      },
+      {
+        type: 'call',
+        title: 'Proposal Discussion',
+        description: 'Discussed proposal details and addressed questions',
+        date: 'Yesterday',
+        dateTime: '2:00 PM GMT',
+        status: 'Completed',
+        user: 'Sarah Johnson'
       },
       {
         type: 'email',
-        title: 'Sent Agreement Document',
-        description: 'Sent out the agreement documents for the team\'s review - Mr. Shaw',
-        date: 'Yesterday',
-        dateTime: '2:00 PM GMT',
-        status: 'Active',
-        documents: ['Agreement.pdf', 'Terms.docx']
-      },
-      {
-        type: 'meeting',
-        title: 'Call Subject',
-        description: "Follow-up call to discuss Team's Kickoff Project Plans",
-        date: '3 days ago',
-        dateTime: '11:00 AM GMT',
-        status: 'Draft',
-        user: 'Sarah Johnson'
+        title: 'Revised Proposal',
+        description: 'Sent updated proposal based on discussion',
+        date: 'Today',
+        dateTime: '9:00 AM GMT',
+        status: 'Open',
+        user: 'John Smith',
+        documents: ['RevisedProposal.pdf']
       }
     ],
     notes: [
@@ -81,6 +86,9 @@ export const mockLeads: Lead[] = [
     geoCompany: 'RSM UAE',
     position: 'Marketing Director',
     address: 'Dubai, UAE',
+    country: 'UAE',
+    nextTask: 'Schedule demo',
+    associatedContact: 'Anisha Agrawal',
     stage: 'Warm Leads',
     status: 'Open',
     dueDate: '2024-03-25',
@@ -103,30 +111,32 @@ export const mockLeads: Lead[] = [
     activities: [
       {
         type: 'email',
-        title: 'Sent Product Information',
-        description: 'Sent detailed product specifications and pricing information',
-        date: 'Yesterday',
-        dateTime: '3:30 PM GMT',
-        status: 'Open',
-        documents: ['Pricing.pdf', 'ProductDetails.pdf']
-      },
-      {
-        type: 'call',
-        title: 'Initial Discovery Call',
-        description: 'Discussed current marketing challenges and potential solutions',
-        date: '2 days ago',
-        dateTime: '2:00 PM GMT',
-        status: 'Active',
-        user: 'Mike Thompson'
-      },
-      {
-        type: 'meeting',
-        title: 'Product Demo Session',
-        description: 'Demonstrated key features to the marketing team',
+        title: 'Initial Contact',
+        description: 'Introduction and solution overview',
         date: '4 days ago',
         dateTime: '11:00 AM GMT',
         status: 'Completed',
-        user: 'John Smith'
+        user: 'Mike Thompson',
+        documents: ['SolutionOverview.pdf']
+      },
+      {
+        type: 'email',
+        title: 'Follow-up Information',
+        description: 'Sent requested product details',
+        date: '2 days ago',
+        dateTime: '3:00 PM GMT',
+        status: 'Completed',
+        user: 'Mike Thompson',
+        documents: ['ProductDetails.pdf']
+      },
+      {
+        type: 'call',
+        title: 'Initial Discussion',
+        description: 'Discussed requirements and solution fit',
+        date: 'Today',
+        dateTime: '10:00 AM GMT',
+        status: 'Open',
+        user: 'Sarah Johnson'
       }
     ]
   },
@@ -142,6 +152,9 @@ export const mockLeads: Lead[] = [
     geoCompany: 'RSM Kuwait',
     position: 'CEO',
     address: 'Kuwait City, Kuwait',
+    country: 'Kuwait',
+    nextTask: 'Review proposal',
+    associatedContact: 'Arya Mishra',
     stage: 'Hot Lead',
     status: 'Active',
     dueDate: '2024-03-22',
@@ -163,30 +176,32 @@ export const mockLeads: Lead[] = [
     },
     activities: [
       {
-        type: 'meeting',
-        title: 'Product Demo',
-        description: 'Conducted a comprehensive product demo with the executive team',
-        date: '3 days ago',
-        dateTime: '2:00 PM GMT',
-        status: 'Active'
-      },
-      {
         type: 'email',
-        title: 'Proposal Revision',
-        description: 'Sent updated pricing proposal based on meeting feedback',
-        date: '2 days ago',
-        dateTime: '4:30 PM GMT',
-        status: 'Open',
-        documents: ['RevisedProposal.pdf']
+        title: 'Solution Proposal',
+        description: 'Comprehensive solution and pricing details',
+        date: '5 days ago',
+        dateTime: '9:00 AM GMT',
+        status: 'Completed',
+        user: 'John Smith',
+        documents: ['Proposal.pdf', 'Pricing.pdf']
       },
       {
         type: 'call',
-        title: 'Budget Discussion',
-        description: 'Call with CFO to discuss budget allocation and payment terms',
-        date: 'Yesterday',
-        dateTime: '1:00 PM GMT',
-        status: 'Active',
+        title: 'Proposal Review',
+        description: 'Detailed discussion of proposal and pricing',
+        date: '3 days ago',
+        dateTime: '2:00 PM GMT',
+        status: 'Completed',
         user: 'Sarah Johnson'
+      },
+      {
+        type: 'email',
+        title: 'Meeting Schedule',
+        description: 'Scheduled executive presentation',
+        date: 'Yesterday',
+        dateTime: '4:00 PM GMT',
+        status: 'Open',
+        user: 'John Smith'
       }
     ]
   },
@@ -202,6 +217,9 @@ export const mockLeads: Lead[] = [
     geoCompany: 'RSM Qatar',
     position: 'Procurement Manager',
     address: 'Doha, Qatar',
+    country: 'Qatar',
+    nextTask: 'Review proposal',
+    associatedContact: 'Jayash Bajpai',
     stage: 'Meeting Done',
     status: 'Open',
     dueDate: '2024-03-28',
@@ -224,30 +242,32 @@ export const mockLeads: Lead[] = [
     activities: [
       {
         type: 'email',
-        title: 'Contract Finalization',
-        description: 'Received signed contract and payment details',
-        date: '5 days ago',
-        dateTime: '11:15 AM GMT',
-        status: 'Open',
-        documents: ['SignedContract.pdf']
+        title: 'Meeting Agenda',
+        description: 'Sent agenda and presentation materials',
+        date: '2 days ago',
+        dateTime: '10:00 AM GMT',
+        status: 'Completed',
+        user: 'Mike Thompson',
+        // documents: ['Agenda.pdf', 'Presentation.pdf']
       },
       {
         type: 'meeting',
-        title: 'Implementation Kickoff',
-        description: 'Initial meeting with technical team to plan implementation',
-        date: '3 days ago',
-        dateTime: '10:00 AM GMT',
-        status: 'Active',
-        user: 'John Smith'
+        title: 'Solution Presentation',
+        description: 'Completed product demonstration',
+        date: 'Yesterday',
+        dateTime: '2:00 PM GMT',
+        status: 'Completed',
+        user: 'Mike Thompson'
       },
       {
-        type: 'call',
-        title: 'Technical Requirements',
-        description: 'Detailed discussion about system requirements and integration points',
-        date: 'Yesterday',
-        dateTime: '3:00 PM GMT',
+        type: 'email',
+        title: 'Meeting Follow-up',
+        description: 'Sent meeting summary and next steps',
+        date: 'Today',
+        dateTime: '9:00 AM GMT',
         status: 'Open',
-        user: 'Mike Thompson'
+        user: 'Mike Thompson',
+        documents: ['MeetingSummary.pdf']
       }
     ]
   },
@@ -263,6 +283,9 @@ export const mockLeads: Lead[] = [
     geoCompany: 'RSM Saudi',
     position: 'IT Director',
     address: 'Jeddah, Saudi Arabia',
+    country: 'Saudi Arabia',
+    nextTask: 'Schedule demo',
+    associatedContact: 'Sanjeev Reddy',
     stage: 'Hot Lead',
     status: 'Draft',
     dueDate: '2024-03-31',
@@ -284,12 +307,23 @@ export const mockLeads: Lead[] = [
     },
     activities: [
       {
-        type: 'call',
-        title: 'Initial Contact',
-        description: 'First discovery call to understand requirements and pain points',
+        type: 'email',
+        title: 'Initial Proposal',
+        description: 'Sent initial solution proposal',
         date: '1 week ago',
-        dateTime: '10:30 AM GMT',
-        status: 'Draft'
+        dateTime: '11:00 AM GMT',
+        status: 'Completed',
+        user: 'Sarah Johnson',
+        documents: ['InitialProposal.pdf']
+      },
+      {
+        type: 'call',
+        title: 'Discovery Call',
+        description: 'Initial requirements discussion',
+        date: '3 days ago',
+        dateTime: '2:00 PM GMT',
+        status: 'Completed',
+        user: 'Mike Thompson'
       }
     ]
   },
@@ -305,6 +339,9 @@ export const mockLeads: Lead[] = [
     geoCompany: 'RSM UAE',
     position: 'Operations Director',
     address: 'Abu Dhabi, UAE',
+    country: 'UAE',
+    nextTask: 'Schedule demo',
+    associatedContact: 'Anisha Agrawal',
     stage: 'Meeting scheduled',
     status: 'Active',
     dueDate: '2024-03-29',
@@ -327,11 +364,32 @@ export const mockLeads: Lead[] = [
     activities: [
       {
         type: 'email',
-        title: 'Demo Meeting Setup',
-        description: 'Confirmed demo meeting with the operations team',
-        date: '1 day ago',
-        dateTime: '2:00 PM GMT',
-        status: 'Open'
+        title: 'Product Information',
+        description: 'Sent detailed product information',
+        date: '4 days ago',
+        dateTime: '10:00 AM GMT',
+        status: 'Completed',
+        user: 'Mike Thompson',
+        documents: ['ProductInfo.pdf']
+      },
+      {
+        type: 'call',
+        title: 'Solution Discussion',
+        description: 'Discussed solution details and benefits',
+        date: '2 days ago',
+        dateTime: '3:00 PM GMT',
+        status: 'Completed',
+        user: 'Sarah Johnson'
+      },
+      {
+        type: 'email',
+        title: 'Meeting Confirmation',
+        description: 'Confirmed upcoming product demonstration',
+        date: 'Today',
+        dateTime: '9:00 AM GMT',
+        status: 'Open',
+        user: 'Mike Thompson',
+        documents: ['MeetingDetails.pdf']
       }
     ]
   },
@@ -347,7 +405,10 @@ export const mockLeads: Lead[] = [
     geoCompany: 'RSM Qatar',
     position: 'Innovation Lead',
     address: 'Doha, Qatar',
-    stage: 'Meeting Reschedule',
+    country: 'Qatar',
+    nextTask: 'Schedule demo',
+    associatedContact: 'Jayash Bajpai',
+    stage: 'Warm Leads',
     status: 'Active',
     dueDate: '2024-03-27',
     clientFollowup: 'Reschedule product presentation',
@@ -368,12 +429,23 @@ export const mockLeads: Lead[] = [
     },
     activities: [
       {
-        type: 'call',
-        title: 'Meeting Rescheduling',
-        description: 'Rescheduled the product presentation due to client request',
-        date: '2 days ago',
+        type: 'email',
+        title: 'Solution Overview',
+        description: 'Sent solution overview and benefits',
+        date: '3 days ago',
         dateTime: '11:00 AM GMT',
-        status: 'Open'
+        status: 'Completed',
+        user: 'John Smith',
+        documents: ['Overview.pdf']
+      },
+      {
+        type: 'call',
+        title: 'Initial Discussion',
+        description: 'Discussed requirements and next steps',
+        date: 'Yesterday',
+        dateTime: '2:00 PM GMT',
+        status: 'Completed',
+        user: 'Sarah Johnson'
       }
     ]
   },
@@ -389,7 +461,10 @@ export const mockLeads: Lead[] = [
     geoCompany: 'RSM Kuwait',
     position: 'Technical Director',
     address: 'Kuwait City, Kuwait',
-    stage: 'Client Rejected',
+    country: 'Kuwait',
+    nextTask: 'Review proposal',
+    associatedContact: 'Arya Mishra',
+    stage: 'Warm Leads',
     status: 'Closed',
     dueDate: '2024-03-24',
     clientFollowup: 'Close and document feedback',
@@ -411,11 +486,31 @@ export const mockLeads: Lead[] = [
     activities: [
       {
         type: 'email',
-        title: 'Proposal Rejection',
-        description: 'Client decided to go with another solution',
+        title: 'Final Proposal',
+        description: 'Sent final proposal and terms',
+        date: '5 days ago',
+        dateTime: '10:00 AM GMT',
+        status: 'Completed',
+        user: 'Mike Thompson',
+        documents: ['FinalProposal.pdf']
+      },
+      {
+        type: 'call',
+        title: 'Proposal Review',
+        description: 'Final discussion before decision',
         date: '3 days ago',
-        dateTime: '4:00 PM GMT',
-        status: 'Closed'
+        dateTime: '2:00 PM GMT',
+        status: 'Completed',
+        user: 'Sarah Johnson'
+      },
+      {
+        type: 'email',
+        title: 'Closure Notification',
+        description: 'Received decision to not proceed',
+        date: 'Today',
+        dateTime: '9:00 AM GMT',
+        status: 'Closed',
+        user: 'Mike Thompson'
       }
     ]
   },
@@ -431,6 +526,9 @@ export const mockLeads: Lead[] = [
     geoCompany: 'RSM Saudi',
     position: 'CEO',
     address: 'Dammam, Saudi Arabia',
+    country: 'Saudi Arabia',
+    nextTask: 'Review proposal',
+    associatedContact: 'Sanjeev Reddy',
     stage: 'Warm Leads',
     status: 'Closed',
     dueDate: '2024-03-20',
@@ -452,12 +550,32 @@ export const mockLeads: Lead[] = [
     },
     activities: [
       {
+        type: 'email',
+        title: 'Solution Proposal',
+        description: 'Sent detailed solution proposal',
+        date: '1 week ago',
+        dateTime: '11:00 AM GMT',
+        status: 'Completed',
+        user: 'John Smith',
+        documents: ['Proposal.pdf']
+      },
+      {
         type: 'meeting',
         title: 'Final Discussion',
-        description: 'Met to discuss final concerns, but could not reach agreement',
+        description: 'Meeting to discuss concerns',
         date: '4 days ago',
-        dateTime: '1:00 PM GMT',
-        status: 'Closed'
+        dateTime: '2:00 PM GMT',
+        status: 'Completed',
+        user: 'Sarah Johnson'
+      },
+      {
+        type: 'email',
+        title: 'Closure Email',
+        description: 'Documented decision and feedback',
+        date: 'Today',
+        dateTime: '10:00 AM GMT',
+        status: 'Closed',
+        user: 'John Smith'
       }
     ]
   },
@@ -473,6 +591,9 @@ export const mockLeads: Lead[] = [
     geoCompany: 'RSM UAE',
     position: 'Strategy Director',
     address: 'Sharjah, UAE',
+    country: 'UAE',
+    nextTask: 'Review proposal',
+    associatedContact: 'Anisha Agrawal',
     stage: 'PROPOSAL / NDA',
     status: 'Active',
     dueDate: '2024-03-26',
@@ -495,11 +616,31 @@ export const mockLeads: Lead[] = [
     activities: [
       {
         type: 'email',
-        title: 'Proposal Revision',
-        description: 'Sent updated proposal based on client feedback',
-        date: 'Today',
+        title: 'Initial Proposal',
+        description: 'Sent proposal and NDA documents',
+        date: '3 days ago',
         dateTime: '9:00 AM GMT',
+        status: 'Completed',
+        user: 'Sarah Johnson',
+        documents: ['Proposal.pdf', 'NDA.pdf']
+      },
+      {
+        type: 'call',
+        title: 'Proposal Discussion',
+        description: 'Reviewed proposal details',
+        date: 'Yesterday',
+        dateTime: '3:00 PM GMT',
+        status: 'Completed',
+        user: 'Mike Thompson'
+      },
+      {
+        type: 'email',
+        title: 'Revised Documents',
+        description: 'Sent updated proposal based on feedback',
+        date: 'Today',
+        dateTime: '10:00 AM GMT',
         status: 'Open',
+        user: 'Sarah Johnson',
         documents: ['RevisedProposal.pdf']
       }
     ]

@@ -25,6 +25,9 @@ export interface Lead {
   address: string;
   stage: string;
   probability?: number;
+  nextTask?: string;
+  country?: string;
+  associatedContact?: string;
   lastActivity: {
     type: string;
     date: string;
